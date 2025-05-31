@@ -3,11 +3,9 @@ from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from transformers import pipeline
 
-# Load vision-language model (BLIP)
 processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
 model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
-# Load language model for explanation
 explanation_gen = pipeline("text-generation", model="gpt2")
 
 def analyze_image(image_path):
@@ -29,7 +27,6 @@ def respond_to_prompt(prompt, age):
         response = explanation_gen(impact_prompt, max_length=120, do_sample=True)[0]['generated_text']
     return response
 
-# Main logic
 def process_image_with_age(image_path, age):
     print("Analyzing image...")
     description = analyze_image(image_path)
